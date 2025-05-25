@@ -1,0 +1,2 @@
+# mitienda-app
+SISTEMA DE VENTA DE INDUMENTARIA
