@@ -1,118 +1,119 @@
 const products = [
   {
     id: '1',
-    name: 'Floral Summer Dress',
-    description: 'Long dress with floral print and V-neck, perfect for warm days.',
-    category: 'Dresses',
+    name: 'Vestido de Verano Floral',
+    description: 'Vestido largo con estampado floral y escote en V, perfecto para días cálidos.',
+    category: 'Vestidos',
     brand: 'Chic Style',
     price: 59.99,
     stock: 20,
     size: ['S', 'M', 'L'],
-    color: [{ name: 'Multicolor', value: '#FF69B4' }], // ejemplo: hot pink
-    material: 'Polyester',
+    color: [{ name: 'Multicolor', value: '#FF69B4' }],
+    material: 'Poliéster',
     image: 'https://picsum.photos/200?random=1'
   },
   {
     id: '2',
-    name: 'White Lace Blouse',
-    description: 'Elegant blouse with lace details on sleeves and round neck.',
-    category: 'Blouses',
+    name: 'Blusa de Encaje Blanca',
+    description: 'Blusa elegante con detalles de encaje en las mangas y cuello redondo.',
+    category: 'Blusas',
     brand: 'Femme Line',
     price: 39.99,
     stock: 15,
     size: ['S', 'M', 'L', 'XL'],
-    color: [{ name: 'White', value: '#FFFFFF' }],
-    material: 'Cotton and lace',
+    color: [{ name: 'Blanco', value: '#FFFFFF' }],
+    material: 'Algodón y encaje',
     image: 'https://picsum.photos/200?random=2'
   },
   {
     id: '3',
-    name: 'Dark Blue Skinny Jeans',
-    description: 'High-rise skinny jeans, comfortable and versatile.',
-    category: 'Pants',
+    name: 'Jeans Ajustados Azul Oscuro',
+    description: 'Jeans de tiro alto, cómodos y versátiles.',
+    category: 'Pantalones',
     brand: 'Denim Pro',
     price: 49.99,
     stock: 25,
     size: ['36', '38', '40', '42'],
-    color: [{ name: 'Dark Blue', value: '#00008B' }],
-    material: 'Stretch denim',
+    color: [{ name: 'Azul Oscuro', value: '#00008B' }],
+    material: 'Denim elástico',
     image: 'https://picsum.photos/200?random=3'
   },
   {
     id: '4',
-    name: 'Black Faux Leather Jacket',
-    description: 'Fitted faux leather jacket with front zipper and side pockets.',
-    category: 'Jackets',
+    name: 'Campera de Cuero Sintético Negra',
+    description: 'Campera entallada de cuero sintético con cierre frontal y bolsillos laterales.',
+    category: 'Camperas',
     brand: 'Urban Style',
     price: 89.99,
     stock: 10,
     size: ['S', 'M', 'L'],
-    color: [{ name: 'Black', value: '#000000' }],
-    material: 'Faux leather',
+    color: [{ name: 'Negro', value: '#000000' }],
+    material: 'Cuero sintético',
     image: 'https://picsum.photos/200?random=4'
   },
   {
     id: '5',
-    name: 'Pleated Skirt in Soft Pink',
-    description: 'Midi skirt with pleats and elastic waistband for a romantic look.',
-    category: 'Skirts',
+    name: 'Falda Plisada Rosa Suave',
+    description: 'Falda midi con pliegues y cintura elástica para un look romántico.',
+    category: 'Faldas',
     brand: 'Luna Rose',
     price: 44.99,
     stock: 18,
     size: ['S', 'M', 'L'],
-    color: [{ name: 'Soft Pink', value: '#F8C8DC' }],
-    material: 'Chiffon',
+    color: [{ name: 'Rosa Suave', value: '#F8C8DC' }],
+    material: 'Chifón',
     image: 'https://picsum.photos/200?random=5'
   },
   {
     id: '6',
-    name: 'Casual Striped T-Shirt',
-    description: 'Short-sleeve cotton T-shirt with modern stripe design.',
-    category: 'T-Shirts',
+    name: 'Remera Rayada Casual',
+    description: 'Remera de algodón de manga corta con diseño de rayas moderno.',
+    category: 'Remeras',
     brand: 'Everyday Wear',
     price: 24.99,
     stock: 30,
     size: ['S', 'M', 'L', 'XL'],
     color: [
-      { name: 'White', value: '#FFFFFF' },
-      { name: 'Navy Blue', value: '#000080' }
+      { name: 'Blanco', value: '#FFFFFF' },
+      { name: 'Azul Marino', value: '#000080' }
     ],
-    material: '100% Cotton',
+    material: '100% Algodón',
     image: 'https://picsum.photos/200?random=6'
   },
   {
     id: '7',
-    name: 'High-Waisted Leggings',
-    description: 'Comfortable and supportive leggings for daily wear or workout.',
-    category: 'Leggings',
+    name: 'Calzas Tiro Alto',
+    description: 'Calzas cómodas y ajustadas para uso diario o ejercicio.',
+    category: 'Calzas',
     brand: 'FitLine',
     price: 29.99,
     stock: 22,
     size: ['XS', 'S', 'M', 'L'],
     color: [
-      { name: 'Black', value: '#000000' },
-      { name: 'Gray', value: '#808080' }
+      { name: 'Negro', value: '#000000' },
+      { name: 'Gris', value: '#808080' }
     ],
-    material: 'Spandex and polyester',
+    material: 'Spandex y poliéster',
     image: 'https://picsum.photos/200?random=7'
   },
   {
     id: '8',
-    name: 'Knitted Cardigan',
-    description: 'Soft knit cardigan with buttons and front pockets.',
-    category: 'Cardigans',
+    name: 'Cárdigan Tejido',
+    description: 'Cárdigan suave con botones y bolsillos delanteros.',
+    category: 'Cárdigans',
     brand: 'Cozy Knit',
     price: 54.99,
     stock: 12,
     size: ['S', 'M', 'L'],
     color: [
       { name: 'Beige', value: '#F5F5DC' },
-      { name: 'Cream', value: '#FFFDD0' }
+      { name: 'Crema', value: '#FFFDD0' }
     ],
-    material: 'Acrylic blend',
+    material: 'Mezcla acrílica',
     image: 'https://picsum.photos/200?random=8'
   }
 ];
+
 
 
 let error = false;

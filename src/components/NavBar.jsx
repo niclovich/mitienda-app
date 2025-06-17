@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
+import {
+  AppBar, Box, Toolbar, IconButton, Typography, Menu, Container,
+  Avatar, Button, Tooltip, MenuItem
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AdbIcon from '@mui/icons-material/Adb';
 import { NavLink } from 'react-router-dom';
 
-// Assets y componentes propios
 import logo from '../assets/img/logo.png';
 import NavbarCarrusel from './NavbarCarrusel';
 import CartWidget from './CartWidget';
@@ -16,7 +18,18 @@ const pages = [
   { name: 'Contacto', path: '/contacto' }
 ];
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const categorias = [
+  { id: 'vestidos', name: 'Vestidos' },
+  { id: 'blusas', name: 'Blusas' },
+  { id: 'pantalones', name: 'Pantalones' },
+  { id: 'camperas', name: 'Camperas' },
+  { id: 'faldas', name: 'Faldas' },
+  { id: 'remeras', name: 'Remeras' },
+  { id: 'calzas', name: 'Calzas' },
+  { id: 'cardigans', name: 'Cárdigans' }
+];
+
+const settings = ['Perfil', 'Cuenta', 'Panel', 'Cerrar sesión'];
 
 function ResponsiveAppBar() {
   const appBarStyle = {
@@ -28,6 +41,7 @@ function ResponsiveAppBar() {
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElProductos, setAnchorElProductos] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -73,11 +87,7 @@ function ResponsiveAppBar() {
 
             {/* Menú hamburguesa mobile */}
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
+              <IconButton size="large" onClick={handleOpenNavMenu} color="inherit">
                 <MenuIcon />
               </IconButton>
               <Menu
@@ -127,30 +137,70 @@ function ResponsiveAppBar() {
 
             {/* Navegación Desktop */}
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center' }}>
-              {pages.map((page) => (
-                <Button
-                  key={page.name}
-                  component={NavLink}
-                  to={page.path}
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    ...buttonStyle,
-                    textDecoration: 'none',
-                    '&.active': {
-                      fontWeight: 'bold',
-                      borderBottom: '2px solid black'
-                    }
-                  }}
-                >
-                  {page.name}
-                </Button>
-              ))}
+              {pages.map((page) =>
+                page.name === 'Productos' ? (
+                  <Box
+                    key={page.name}
+                    onMouseEnter={(e) => setAnchorElProductos(e.currentTarget)}
+                    onMouseLeave={() => setAnchorElProductos(null)}
+                  >
+                    <Button
+                      sx={{
+                        ...buttonStyle,
+                        textDecoration: 'none',
+                        '&.active': {
+                          fontWeight: 'bold',
+                          borderBottom: '2px solid black'
+                        }
+                      }}
+                    >
+                      {page.name}
+                    </Button>
+                    <Menu
+                      anchorEl={anchorElProductos}
+                      open={Boolean(anchorElProductos)}
+                      onClose={() => setAnchorElProductos(null)}
+                      MenuListProps={{
+                        onMouseLeave: () => setAnchorElProductos(null)
+                      }}
+                    >
+                      {categorias.map((cat) => (
+                        <MenuItem
+                          key={cat.id}
+                          component={NavLink}
+                          to={`/categoria/${cat.id}`}
+                          onClick={() => setAnchorElProductos(null)}
+                        >
+                          {cat.name}
+                        </MenuItem>
+                      ))}
+                    </Menu>
+                  </Box>
+                ) : (
+                  <Button
+                    key={page.name}
+                    component={NavLink}
+                    to={page.path}
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      ...buttonStyle,
+                      textDecoration: 'none',
+                      '&.active': {
+                        fontWeight: 'bold',
+                        borderBottom: '2px solid black'
+                      }
+                    }}
+                  >
+                    {page.name}
+                  </Button>
+                )
+              )}
             </Box>
 
             {/* Usuario y carrito */}
             <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center', gap: 2 }}>
               <CartWidget />
-              <Tooltip title="Open settings">
+              <Tooltip title="Configuración">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 </IconButton>

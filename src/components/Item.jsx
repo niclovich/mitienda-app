@@ -46,11 +46,6 @@ const Item = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [stockLevel] = useState(product.stock); // Default stock level if not provided
 
-  const sizes = ["S", "M", "L"];
-  const colors = [
-    { name: "Beige", code: "#F5F5DC" },
-    { name: "Cream", code: "#FFFDD0" }
-  ];
 
   const handleAddToCart = () => {
     if (!selectedSize || !selectedColor) {
@@ -110,12 +105,12 @@ const Item = ({ product }) => {
           Color:
         </Typography>
         <Stack direction="row" mb={2}>
-          {colors.map((color) => (
+          {product.color.map((color) => (
             <ColorButton
               key={color.name}
               onClick={() => setSelectedColor(color.name)}
               selected={selectedColor === color.name}
-              sx={{ backgroundColor: color.code }}
+              sx={{ backgroundColor: color.value }}
               aria-label={`Select ${color.name} color`}
             />
           ))}
@@ -125,7 +120,7 @@ const Item = ({ product }) => {
           Size:
         </Typography>
         <Stack direction="row" mb={3}>
-          {sizes.map((size) => (
+          {product.size.map((size) => (
             <SizeButton
               key={size}
               onClick={() => setSelectedSize(size)}
