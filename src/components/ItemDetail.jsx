@@ -190,13 +190,13 @@ const ItemDetail = ({product}) => {
               onClick={() => handleSectionToggle("material")}
             >
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography variant="subtitle1">Material Details</Typography>
+                <Typography variant="subtitle1">Detalles del Material</Typography>
                 {expandedSection === "material" ? <MdExpandLess /> : <MdExpandMore />}
               </Box>
               <Collapse in={expandedSection === "material"}>
                 <Typography variant="body2" sx={{ mt: 2 }}>
-                  Made with premium acrylic blend material for durability and comfort.
-                  Machine washable. Imported.
+                  Confeccionado con mezcla acrílica de alta calidad que garantiza durabilidad y comodidad.
+                  Lavable a máquina. Producto importado.
                 </Typography>
               </Collapse>
             </CardContent>
@@ -208,17 +208,18 @@ const ItemDetail = ({product}) => {
               onClick={() => handleSectionToggle("shipping")}
             >
               <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography variant="subtitle1">Shipping & Returns</Typography>
+                <Typography variant="subtitle1">Envíos y Devoluciones</Typography>
                 {expandedSection === "shipping" ? <MdExpandLess /> : <MdExpandMore />}
               </Box>
               <Collapse in={expandedSection === "shipping"}>
                 <Typography variant="body2" sx={{ mt: 2 }}>
-                  Free shipping on orders over $100. 30-day return policy.
-                  See our return policy for more details.
+                  Envío gratuito en compras superiores a $100. Política de devolución de 30 días.
+                  Consultá nuestra política de devoluciones para más información.
                 </Typography>
               </Collapse>
             </CardContent>
           </Card>
+
         </Grid>
       </Grid>
     </Container>
