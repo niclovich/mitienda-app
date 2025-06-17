@@ -1,34 +1,47 @@
 import { useEffect, useState } from "react";
-
 import { useParams } from "react-router-dom";
 import { getProductById } from "../mock/AsyncMock";
 import ItemDetail from "./ItemDetail";
-const ItemDetailContainer = () => {
-    const { id } = useParams();
-    const [product, setProduct] = useState([]);
+import { Typography, CircularProgress, Box } from "@mui/material";
 
-    useEffect(() => {
-        getProductById(id)
-            .then((response) => {
-                setProduct(response);
-                console.log("Producto obtenido:", response);
-            })
-            .catch((error) => {
-                console.error("Error fetching product:", error);
-            });
-    },[]);
-    // useEffect(() => {
-    //      getProducts()
-    //           .then((response) => {
-    //             setProducts(response);
-    //             console.log("Productos obtenidos:", response);
-    //           })
-    //           .catch((error) => {
-    //             console.error("Error fetching products:", error);
-    //           });
-    // },[]);
+const ItemDetailContainer = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getProductById(id)
+      .then((response) => {
+        setProduct(response);
+      })
+      .catch((error) => {
+        console.error("Error fetching product:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) {
     return (
-        <ItemDetail product={product}/>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+        <CircularProgress />
+        <Typography variant="h6" sx={{ ml: 2 }}>
+          Buscando producto...
+        </Typography>
+      </Box>
     );
-    }
+  }
+
+  if (!product) {
+    return (
+      <Typography variant="h6" align="center" sx={{ mt: 5 }}>
+        No se encontró el producto solicitado.
+      </Typography>
+    );
+  }
+
+  return <ItemDetail product={product} />;
+};
+
 export default ItemDetailContainer;
