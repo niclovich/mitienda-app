@@ -160,9 +160,8 @@ const ItemDetail = ({product}) => {
               variant="contained"
               fullWidth
               sx={{
-                bgcolor: "#F5E6E8",
+                bgcolor: "#e61835",
                 color: "text.primary",
-                "&:hover": { bgcolor: "#E8D1D4" }
               }}
             >
               Add to Cart
@@ -170,7 +169,7 @@ const ItemDetail = ({product}) => {
             <Button
               variant="outlined"
               fullWidth
-              sx={{ borderColor: "#F5E6E8", color: "text.primary" }}
+              sx={{ borderColor: "#e61830", color: "text.primary" }}
             >
               Buy Now
             </Button>
