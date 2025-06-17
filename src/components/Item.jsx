@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Card, CardContent, CardMedia, Typography, Button, Stack, IconButton, Chip, CircularProgress, styled } from "@mui/material";
-import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import { FaHeart, FaShoppingCart ,FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: 345,
@@ -44,15 +44,13 @@ const Item = ({ product }) => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
-  const [stockLevel] = useState(product.stock); // Default stock level if not provided
+  const [stockLevel] = useState(product.stock);
 
 
   const handleAddToCart = () => {
     if (!selectedSize || !selectedColor) {
-      alert("Please select both size and color");
       return;
     }
-    console.log("Added to cart!");
   };
 
   return (
@@ -132,34 +130,38 @@ const Item = ({ product }) => {
           ))}
         </Stack>
 
-        <Button
-          variant="contained"
-          fullWidth
-          startIcon={<FaShoppingCart />}
-          onClick={handleAddToCart}
-          disabled={!selectedSize || !selectedColor}
-          sx={{
-            borderRadius: 2,
-            backgroundColor: "#333",
-            "&:hover": { backgroundColor: "#444" }
-          }}
-        >
-          Add to Cart
-        </Button>
-        <Button
-          variant="contained"
-          fullWidth
-          startIcon={<FaShoppingCart />}
-          component={Link}
-          to={`/item/${product.id}`} // aquí va el ID del producto
-          sx={{
-            borderRadius: 2,
-            backgroundColor: "#333",
-            "&:hover": { backgroundColor: "#444" }
-          }}
-        >
-          Ver Detalles
-        </Button>
+        <Stack direction="row" spacing={2} mt={2}>
+          <Button
+            variant="contained"
+            fullWidth
+            startIcon={<FaShoppingCart />}
+            onClick={handleAddToCart}
+            disabled={!selectedSize || !selectedColor}
+            sx={{
+              borderRadius: 2,
+              backgroundColor: "#333",
+              "&:hover": { backgroundColor: "#444" },
+              flex: 1
+            }}
+          >
+            Agregar
+          </Button>
+
+          <Button
+            variant="contained"
+            fullWidth
+            startIcon={<FaSearch />}
+            component={Link}
+            to={`/item/${product.id}`}
+            sx={{
+              borderRadius: 2,
+              backgroundColor: "#333",
+              "&:hover": { backgroundColor: "#444" },
+              flex: 1
+            }}
+          > Ver Detalle
+          </Button>
+        </Stack>
       </CardContent>
     </StyledCard>
   );
