@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Box, Button, Container, Grid, Typography, Select, MenuItem, IconButton, Collapse, Card, CardContent, styled, ImageList, ImageListItem } from "@mui/material";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
+import { FaShoppingCart, FaCreditCard } from "react-icons/fa";
 
 const ProductImage = styled("img")(({ theme }) => ({
   width: "100%",
@@ -155,26 +156,6 @@ const ItemDetail = ({product}) => {
             </IconButton>
           </Box>
 
-          <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{
-                bgcolor: "#e61835",
-                color: "text.primary",
-              }}
-            >
-              Add to Cart
-            </Button>
-            <Button
-              variant="outlined"
-              fullWidth
-              sx={{ borderColor: "#e61830", color: "text.primary" }}
-            >
-              Buy Now
-            </Button>
-          </Box>
-
           <Typography
             variant="body2"
             color={product.stock > 0 ? "success.main" : "error.main"}
@@ -182,6 +163,38 @@ const ItemDetail = ({product}) => {
           >
             {product.stock > 0 ? `${product.stock} items in stock` : "Out of stock"}
           </Typography>
+            <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
+              <Button
+                variant="contained"
+                fullWidth
+                startIcon={<FaShoppingCart />}
+                sx={{
+                  bgcolor: "#e61835",
+                  color: "white",
+                  "&:hover": { bgcolor: "#c5132c" }
+                }}
+              >
+                Agregar al Carrito
+              </Button>
+
+              <Button
+                variant="outlined"
+                fullWidth
+                startIcon={<FaCreditCard />}
+                sx={{
+                  borderColor: "#e61830",
+                  color: "#e61830",
+                  "&:hover": {
+                    bgcolor: "#fff5f5",
+                    borderColor: "#c5132c",
+                    color: "#c5132c"
+                  }
+                }}
+              >
+                Comprar Ahora
+              </Button>
+            </Box>
+
 
           <Card variant="outlined" sx={{ mb: 2 }}>
             <CardContent
