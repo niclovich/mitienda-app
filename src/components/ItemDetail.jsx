@@ -1,9 +1,12 @@
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Box, Button, Container, Grid, Typography, Select, MenuItem, IconButton, Collapse, Card, CardContent, styled, ImageList, ImageListItem } from "@mui/material";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import { FaShoppingCart, FaCreditCard } from "react-icons/fa";
+// Importando el contexto del carrito
+import { CartContext } from "../context/CartContext"; 
+
 
 const ProductImage = styled("img")(({ theme }) => ({
   width: "100%",
@@ -31,12 +34,42 @@ const productImages = [
   "https://images.unsplash.com/photo-1583745095368-9914d429d124"
 ];
 
+
+
 const ItemDetail = ({product}) => {
+
   const [selectedSize, setSelectedSize] = useState("");
-  const [selectedColor, setSelectedColor] = useState("beige");
+  const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [expandedSection, setExpandedSection] = useState("material");
   const [mainImage, setMainImage] = useState(productImages[0]);
+  
+  const { addToCart } = useContext(CartContext);
+
+
+  const onAdd = (quantity) => {
+    
+    //console.log("Cantidad seleccionada:", quantity);
+    if (product.stock <= 0) {
+      alert("Lo sentimos, este producto está agotado.");
+      return;
+    }
+
+    if (!selectedSize) {
+      alert("Por favor, selecciona una talla.");
+      return;
+    }
+
+    if (!selectedColor) {
+      alert("Por favor, selecciona un color.");
+      return;
+    }
+    product.selectedSize = selectedSize;
+    product.selectedColor = selectedColor;
+    //console.log("Producto a agregar:", product);
+    // Si pasa todas las validaciones, agrega al carrito
+    addToCart(product, quantity);
+  };
 
 
   const handleSectionToggle = (section) => {
@@ -164,18 +197,22 @@ const ItemDetail = ({product}) => {
             {product.stock > 0 ? `${product.stock} items in stock` : "Out of stock"}
           </Typography>
             <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
-              <Button
-                variant="contained"
-                fullWidth
-                startIcon={<FaShoppingCart />}
-                sx={{
-                  bgcolor: "#e61835",
-                  color: "white",
-                  "&:hover": { bgcolor: "#c5132c" }
-                }}
-              >
-                Agregar al Carrito
-              </Button>
+            <Button
+              variant="contained"
+              fullWidth
+              startIcon={<FaShoppingCart />}
+              onClick={() => onAdd(quantity)}
+              sx={{
+                bgcolor: "#e61835",
+                color: "white",
+                "&:hover": { bgcolor: "#c5132c" }
+              }}
+              disabled={product.stock <= 0 || selectedSize === "" || selectedColor === ""}
+            >
+              Agregar al Carrito
+            </Button>
+
+
 
               <Button
                 variant="outlined"

@@ -1,6 +1,6 @@
 const products = [
   {
-    id: '1',
+    id: '1',//no lo subo a firebase porque no lo necesito
     name: 'Vestido de Verano Floral',
     description: 'Vestido largo con estampado floral y escote en V, perfecto para días cálidos.',
     category: 'Vestidos',

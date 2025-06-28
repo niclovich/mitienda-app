@@ -19,14 +19,14 @@ const pages = [
 ];
 
 const categorias = [
-  { id: 'vestidos', name: 'Vestidos' },
-  { id: 'blusas', name: 'Blusas' },
-  { id: 'pantalones', name: 'Pantalones' },
-  { id: 'camperas', name: 'Camperas' },
-  { id: 'faldas', name: 'Faldas' },
-  { id: 'remeras', name: 'Remeras' },
-  { id: 'calzas', name: 'Calzas' },
-  { id: 'cardigans', name: 'Cárdigans' }
+  { id: 'Vestidos', name: 'Vestidos' },
+  { id: 'Blusas', name: 'Blusas' },
+  { id: 'Pantalones', name: 'Pantalones' },
+  { id: 'Camperas', name: 'Camperas' },
+  { id: 'Faldas', name: 'Faldas' },
+  { id: 'Remeras', name: 'Remeras' },
+  { id: 'Calzas', name: 'Calzas' },
+  { id: 'Cárdigans', name: 'Cárdigans' }
 ];
 
 const settings = ['Perfil', 'Cuenta', 'Panel', 'Cerrar sesión'];
