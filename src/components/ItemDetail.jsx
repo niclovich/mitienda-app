@@ -7,6 +7,7 @@ import { CartContext } from "../context/CartContext";
 import ItemCount from "./ItemCount";
 import { useToast } from '../context/ToastContext';
 import { Link } from "react-router-dom";
+import ColorSwatch from "./shared/ColorSwatch";
 
 const ProductImage = styled("img")({
   width: "100%",
@@ -15,14 +16,14 @@ const ProductImage = styled("img")({
   "&:hover": { transform: "scale(1.05)" }
 });
 
-const ColorSwatch = styled(Button)(({ selected }) => ({
-  width: 40,
-  height: 40,
-  minWidth: "unset",
-  borderRadius: "50%",
-  margin: "0 8px",
-  border: selected ? "2px solid #000" : "1px solid #ddd"
-}));
+// const ColorSwatch = styled(Button)(({ selected }) => ({
+//   width: 40,
+//   height: 40,
+//   minWidth: "unset",
+//   borderRadius: "50%",
+//   margin: "0 8px",
+//   border: selected ? "2px solid #000" : "1px solid #ddd"
+// }));
 
 const productImages = [
   "https://images.unsplash.com/photo-1434389677669-e08b4cac3105",
@@ -153,6 +154,7 @@ const ItemDetail = ({ product }) => {
                     sx={{ backgroundColor: color.value }}
                     aria-label={`Seleccionar color ${color.name}`}
                   />
+
                 ))}
               </Box>
             </Box>

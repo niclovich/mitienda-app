@@ -1,70 +1,85 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
-//crear nuestro contexto.
-export const CartContext = createContext()
-// crear el proveedor 
-export const CartProvider = ({children}) => {
-    const [cart, setCart]= useState([])
-    //datos y logica del carrito
+// Crear nuestro contexto
+export const CartContext = createContext();
 
-    //funciones necesarias para el carrito
-    //Agregar un producto al carrito
-    const addToCart = (item,quantity )=> {
-        // Verificar si el producto ya está en el carrito
+// Crear el proveedor
+export const CartProvider = ({ children }) => {
+    
+    // Inicializar carrito desde localStorage o como array vacío
+    const [cart, setCart] = useState(() => {
+        const storedCart = localStorage.getItem("cart");
+        return storedCart ? JSON.parse(storedCart) : [];
+    });
+
+    // Guardar el carrito en localStorage cada vez que cambie
+    useEffect(() => {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }, [cart]);
+
+    // Agregar un producto al carrito
+    const addToCart = (item, quantity) => {
         if (isInCart(item.id_variante)) {
-            // Si el producto ya está en el carrito, actualizar la cantidad
-            const updatedCart = cart.map((cartItem) => {
-                if (cartItem.id_variante === item.id_variante) {
-                    return { ...cartItem, quantity: cartItem.quantity + quantity };
-                }
-                return cartItem;
-            });
+            const updatedCart = cart.map((cartItem) =>
+                cartItem.id_variante === item.id_variante
+                    ? { ...cartItem, quantity: cartItem.quantity + quantity }
+                    : cartItem
+            );
             setCart(updatedCart);
-        }
-        else{
-            // Si el producto no está en el carrito, agregarlo
+        } else {
             setCart([...cart, { ...item, quantity }]);
-            console.log("Producto agregado al carrito:", cart);
-
         }
-        //setCart([...cart, { ...item, quantity }]);
+    };
 
-    }   
-
+    // Eliminar un producto por ID
     const removeItem = (id) => {
-        // Eliminar un producto del carrito por su id
         const updatedCart = cart.filter((item) => item.id_variante !== id);
         setCart(updatedCart);
     };
 
+    // Limpiar el carrito
     const clearCart = () => {
-        // Limpiar el carrito
         setCart([]);
-    }
+    };
 
+    // Actualizar cantidad de un producto
+    const updateQuantity = (id, quantity) => {
+        const updatedCart = cart.map((item) =>
+            item.id_variante === id
+                ? { ...item, quantity: item.quantity + quantity }
+                : item
+        );
+        setCart(updatedCart);
+    };
 
-
-
-    //Verificar si un producto ya está en el carrito
+    // Verificar si ya está en el carrito
     const isInCart = (id) => {
-        return cart.find((item) => item.id_variante === id);
+        return cart.some((item) => item.id_variante === id);
     };
 
+    // Obtener cantidad total de productos
     const getTotalQuantity = () => {
-        console.log("Carrito actual:", cart);
-        // Obtener la cantidad total de un producto en el carrito
         return cart.reduce((total, item) => total + item.quantity, 0);
-
     };
-    //Calcular el total del carrito
+
+    // Calcular el total en $$
     const getTotal = () => {
         return cart.reduce((total, item) => total + item.precio * item.quantity, 0);
     };
+
     return (
-    <CartContext.Provider value={{ cart, addToCart, removeItem, clearCart, getTotalQuantity }}>
-        {children}
-    </CartContext.Provider>
+        <CartContext.Provider
+            value={{
+                cart,
+                addToCart,
+                removeItem,
+                clearCart,
+                updateQuantity,
+                getTotalQuantity,
+                getTotal,
+            }}
+        >
+            {children}
+        </CartContext.Provider>
     );
-
-
-}
+};

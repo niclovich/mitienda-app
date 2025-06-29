@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Card, CardContent, CardMedia, Typography, Button, Stack, IconButton, Chip, styled } from "@mui/material";
 import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import ColorSwatch from "./shared/ColorSwatch";
 
 const StyledCard = styled(Card)({
   maxWidth: 345,
@@ -120,7 +121,7 @@ const Item = ({ product }) => {
         <Typography variant="subtitle2" gutterBottom>Color:</Typography>
         <Stack direction="row" mb={2}>
           {colors.map(color => (
-            <ColorButton
+            <ColorSwatch
               key={color.name}
               onClick={() => {
                 setSelectedColor(color.name);
@@ -132,6 +133,7 @@ const Item = ({ product }) => {
             />
           ))}
         </Stack>
+
 
         <Typography variant="subtitle2" gutterBottom>Talle:</Typography>
         <Stack direction="row" mb={3}>
