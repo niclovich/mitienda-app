@@ -1,68 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button, Typography, IconButton, Grid } from '@mui/material';
+import { FaShoppingCart } from 'react-icons/fa';
+import Toast from './shared/Toast'; // Asegurate de importar correctamente
 
-const ItemCount = ({stock}) => {
+const ItemCount = ({ stock, onAdd }) => {
     const [count, setCount] = useState(1);
 
-    const [comprar, setComprar] = useState(false);
-
     const sumar = () => {
-        if (count < stock) {
-            // Verifica que no exceda el stock
-            setCount(count + 1);
-
-        }
-    }
-    const restar = () => {
-        if (count > 1) {
-            setCount(count - 1);
-        }
-    }
-
-    const comprarProducto = () => {
-        setComprar(!comprar);   
+        if (count < stock) setCount(count + 1);
     };
 
-    //no se recomienda usar useEffect sin un array de dependencias, ya que se ejecutará en cada renderizado
-    useEffect(() => {
-        // Aquí podrías agregar lógica adicional si es necesario
-        console.log(`Sin el array de dependencias, este efecto se ejecutará en cada renderizado.`);
-    });
+    const restar = () => {
+        if (count > 1) setCount(count - 1);
+    };
 
-    // Con un array de dependencias vacío, el efecto se ejecutará solo una vez al montar el componente
-    useEffect(() => {
-        console.log(`Con el array de dependencias, este efecto se ejecutará una sola vez al montar el componente.`);
+    const handleAdd = () => {
+        onAdd(count);
+    };
 
-    }, []);
-
-    // Con un array de dependencias que incluye 'count', el efecto se ejecutará cada vez que 'count' cambie
-    useEffect(() => {
-        console.log(`Con el array de dependencias [comprar], este efecto se ejecutará cada vez que 'count' cambie: ${comprar}`);
-
-    }, [comprar]);
     return (
-        <Box display="flex" flexDirection="column" alignItems="center" mt={4} gap={3}>
-        <Typography variant="h6">Cantidad</Typography>
-        <Box display="flex" alignItems="center" gap={2}>
-            <Button variant="outlined" color="secondary" onClick={restar}>-</Button>
-            <Typography variant="h5">{count}</Typography>
-            <Button variant="outlined" color="secondary" onClick={sumar}>+</Button>
-        </Box>
-        <Typography variant="body2" color="text.secondary">
-            Stock disponible: {stock}
-        </Typography>
-        <Button variant="contained" color="primary" onClick={comprarProducto}  disabled={stock === 0}>
-            Comprar
-        </Button>
-    
- 
+        <>
+            <Grid container spacing={2} sx={{ m: 2, display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2 }}>
+                <Box 
+                    display="flex" 
+                    alignItems="center" 
+                    justifyContent="space-between"
+                    border="1px solid #c4c4c4" 
+                    borderRadius={1} 
+                    px={1} 
+                    py={0.5}
+                    height="40px"
+                    width="100%"
+                >
+                    <IconButton size="small" onClick={restar}>-</IconButton>
+                    <Typography variant="body1">{count}</Typography>
+                    <IconButton size="small" onClick={sumar}>+</IconButton>
+                </Box>
 
-        {comprar && (
-            <Typography variant="body1" color="success.main">
-            ¡Compra realizada con éxito!
-            </Typography>
-        )}
-        </Box>
+                <Button 
+                    variant="contained"
+                    startIcon={<FaShoppingCart />}
+                    onClick={handleAdd}
+                    sx={{
+                        bgcolor: "#a61919",
+                        color: "white",
+                        "&:hover": { bgcolor: "#8b1616" },
+                        width: "100%",
+                        height: "40px"
+                    }}
+                >
+                    Agregar al carrito
+                </Button>
+            </Grid>
+
+        </>
     );
 };
 

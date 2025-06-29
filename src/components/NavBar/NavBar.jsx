@@ -7,9 +7,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AdbIcon from '@mui/icons-material/Adb';
 import { NavLink } from 'react-router-dom';
 
-import logo from '../assets/img/logo.png';
+//import logo from '../assets/img/logo.png';
+import logo from '../../assets/img/logo.png'; // Ajusta la ruta según tu estructura de carpetas
 import NavbarCarrusel from './NavbarCarrusel';
-import CartWidget from './CartWidget';
+import CartWidget from '../Cart/CartWidget';
 
 const pages = [
   { name: 'Home', path: '/' },

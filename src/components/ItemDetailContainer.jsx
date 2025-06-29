@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Typography } from "@mui/material";
-import LoaderComponent from "./LoaderComponent";
+import LoaderComponent from "./shared/LoaderComponent";
 import ItemDetail from "./ItemDetail";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../service/firebase";
 
+import { getProductById } from "../mock/AsyncMock"; // Asegúrate de que la ruta sea correcta
 const ItemDetailContainer = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // PRODUCTOS DESDE FIREBASE
-  useEffect(() => {
+/*  useEffect(() => {
     if (!id) return; // Validación por si id es undefined
     setLoading(true);
 
@@ -36,7 +37,22 @@ const ItemDetailContainer = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [id]);
+  }, [id]);*/
+
+  
+  useEffect(() => {
+    getProductById(id)
+       .then((response) => {
+        console.log("Producto obtenido:", response);
+         setProduct(response);
+       })
+       .catch((error) => {
+         console.error("Error fetching product:", error);
+       })
+       .finally(() => {
+         setLoading(false);
+       });
+   }, [id]);
 
     return (
       <>

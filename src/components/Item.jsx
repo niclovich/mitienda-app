@@ -1,24 +1,21 @@
 import React, { useState } from "react";
-import { Box, Card, CardContent, CardMedia, Typography, Button, Stack, IconButton, Chip, CircularProgress, styled } from "@mui/material";
-import { FaHeart, FaShoppingCart ,FaSearch } from "react-icons/fa";
+import { Box, Card, CardContent, CardMedia, Typography, Button, Stack, IconButton, Chip, styled } from "@mui/material";
+import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
-const StyledCard = styled(Card)(({ theme }) => ({
+
+const StyledCard = styled(Card)({
   maxWidth: 345,
   borderRadius: 12,
   backgroundColor: "#faf9f8",
   boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
   transition: "transform 0.3s ease",
-  "&:hover": {
-    transform: "translateY(-4px)"
-  }
-}));
+  "&:hover": { transform: "translateY(-4px)" }
+});
 
 const ProductImage = styled(CardMedia)({
   height: 320,
   transition: "transform 0.3s ease",
-  "&:hover": {
-    transform: "scale(1.05)"
-  }
+  "&:hover": { transform: "scale(1.05)" }
 });
 
 const ColorButton = styled(IconButton)(({ selected }) => ({
@@ -35,33 +32,65 @@ const SizeButton = styled(Button)(({ selected }) => ({
   backgroundColor: selected ? "#333" : "transparent",
   color: selected ? "#fff" : "#333",
   border: "1px solid #333",
-  "&:hover": {
-    backgroundColor: selected ? "#444" : "#f5f5f5"
-  }
+  "&:hover": { backgroundColor: selected ? "#444" : "#f5f5f5" }
 }));
+
+const OfertaBadge = styled(Box)({
+  position: "absolute",
+  top: 8,
+  left: 8,
+  backgroundColor: "#e61835",
+  color: "#fff",
+  padding: "2px 8px",
+  borderRadius: 8,
+  fontSize: 12,
+  fontWeight: "bold",
+  zIndex: 2
+});
 
 const Item = ({ product }) => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
-  const [stockLevel] = useState(product.stock);
 
+  const colors = Array.from(new Map(product.variantes.map(v => [v.color.name, v.color])).values());
+
+  const availableSizes = product.variantes
+    .filter(v => !selectedColor || v.color.name === selectedColor)
+    .map(v => v.talle)
+    .filter((value, index, self) => self.indexOf(value) === index);
 
   const handleAddToCart = () => {
-    if (!selectedSize || !selectedColor) {
+    const varianteSeleccionada = product.variantes.find(
+      v => v.color.name === selectedColor && v.talle === selectedSize
+    );
+
+    if (!varianteSeleccionada || varianteSeleccionada.stock <= 0) {
+      alert("Selecciona una variante válida con stock.");
       return;
     }
+
+    console.log("Producto agregado:", {
+      id_producto: product.id,
+      nombre: product.nombre,
+      precio: product.precio,
+      id_variante: varianteSeleccionada.id_variante,
+      talle: varianteSeleccionada.talle,
+      color: varianteSeleccionada.color,
+      cantidad: 1
+    });
   };
 
   return (
     <StyledCard>
       <Box sx={{ position: "relative" }}>
-        <ProductImage
-          component="img"
-          image={product.image}
-          alt={product.name}
-          loading="lazy"
-        />
+        
+        {product.oferta && (
+          <OfertaBadge>OFERTA</OfertaBadge>
+        )}
+
+        <ProductImage component="img" image={product.imagen} alt={product.nombre} loading="lazy" />
+
         <IconButton
           aria-label="add to favorites"
           sx={{
@@ -77,53 +106,41 @@ const Item = ({ product }) => {
       </Box>
 
       <CardContent>
-        <Typography variant="subtitle2" color="text.secondary">
-          {product.category }
-        </Typography>
-        <Typography variant="h5" component="h2" gutterBottom>
-          {product.name }
-        </Typography>
+        <Typography variant="subtitle2" color="text.secondary">{product.categoria}</Typography>
+        <Typography variant="h5" component="h2" gutterBottom>{product.nombre}</Typography>
         <Typography variant="body2" color="text.secondary" gutterBottom>
-          {  product.description || "A warm and stylish cardigan perfect for chilly days."}
+          {product.descripcion || "Descripción del producto"}
         </Typography>
 
         <Stack direction="row" alignItems="center" spacing={1} mb={2}>
-          <Typography variant="h6" component="span">
-            {product.price || "$49.99"}
-          </Typography>
-          <Chip
-            size="small"
-            label={`${stockLevel} units left`}
-            color="primary"
-            variant="outlined"
-          />
+          <Typography variant="h6" component="span">${product.precio}</Typography>
+          <Chip size="small" label={`${product.variantes.reduce((acc, v) => acc + v.stock, 0)} unidades disponibles`} color="primary" variant="outlined" />
         </Stack>
 
-        <Typography variant="subtitle2" gutterBottom>
-          Color:
-        </Typography>
+        <Typography variant="subtitle2" gutterBottom>Color:</Typography>
         <Stack direction="row" mb={2}>
-          {product.color.map((color) => (
+          {colors.map(color => (
             <ColorButton
               key={color.name}
-              onClick={() => setSelectedColor(color.name)}
+              onClick={() => {
+                setSelectedColor(color.name);
+                setSelectedSize("");
+              }}
               selected={selectedColor === color.name}
               sx={{ backgroundColor: color.value }}
-              aria-label={`Select ${color.name} color`}
+              aria-label={`Seleccionar color ${color.name}`}
             />
           ))}
         </Stack>
 
-        <Typography variant="subtitle2" gutterBottom>
-          Size:
-        </Typography>
+        <Typography variant="subtitle2" gutterBottom>Talle:</Typography>
         <Stack direction="row" mb={3}>
-          {product.size.map((size) => (
+          {availableSizes.map(size => (
             <SizeButton
               key={size}
               onClick={() => setSelectedSize(size)}
               selected={selectedSize === size}
-              aria-label={`Select size ${size}`}
+              aria-label={`Seleccionar talle ${size}`}
             >
               {size}
             </SizeButton>
@@ -159,7 +176,8 @@ const Item = ({ product }) => {
               "&:hover": { backgroundColor: "#444" },
               flex: 1
             }}
-          > Ver Detalle
+          >
+            Ver Detalle
           </Button>
         </Stack>
       </CardContent>

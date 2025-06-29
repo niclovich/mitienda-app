@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { getProducts } from "../mock/AsyncMock";
 import ItemList from "./ItemList";
 import { Container, Typography, CircularProgress, Box } from "@mui/material";
-import LoaderComponent from "./LoaderComponent";
+import LoaderComponent from "./shared/LoaderComponent";
 
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../service/firebase"; // Asegúrate de que la ruta sea correcta
@@ -13,33 +13,34 @@ const ItemListContainer = ({ greeting }) => {
   const { idCategoria } = useParams();
 
   //PRODUCTOS MOCKEADOS
-  // useEffect(() => {
-  //   setLoading(true);
+   useEffect(() => {
+     setLoading(true);
 
-  //   getProducts()
-  //     .then((response) => {
-  //       if (idCategoria) {
-  //         const filtrados = response.filter(
-  //           (prod) =>
-  //             prod.category.toLowerCase().replace(/\s+/g, '') ===
-  //             idCategoria.toLowerCase()
-  //         );
-  //         setProducts(filtrados);
-  //       } else {
-  //         setProducts(response);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching products:", error);
-  //       setProducts([]); // en caso de error, dejar array vacío
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // }, [idCategoria]);
+     getProducts()
+       .then((response) => {
+          console.log("Productos obtenidos:", response);
+         if (idCategoria) {
+           const filtrados = response.filter(
+           (prod) =>
+               prod.category.toLowerCase().replace(/\s+/g, '') ===
+               idCategoria.toLowerCase()
+           );
+           setProducts(filtrados);
+         } else {
+           setProducts(response);
+         }
+       })
+       .catch((error) => {
+        console.error("Error fetching products:", error);
+       setProducts([]); // en caso de error, dejar array vacío
+     })
+     .finally(() => {
+        setLoading(false);
+      });
+   }, [idCategoria]);
 
   //PRODUCTOS DESDE FIREBASE
-  useEffect(() => {
+/*  useEffect(() => {
     setLoading(true);
     console.log("idCategoria:", idCategoria);
 
@@ -66,7 +67,7 @@ const ItemListContainer = ({ greeting }) => {
         setLoading(false);
       });
   }, [idCategoria]);
-
+*/
 
   return (
     <Container maxWidth="xl" style={{ marginTop: "20px" }}>

@@ -1,10 +1,17 @@
+import { useContext } from 'react';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { CartContext } from '../../context/CartContext';
 
 const CartWidget = () => {
+  const { getTotalQuantity } = useContext(CartContext);
+
+  const totalQuantity = getTotalQuantity();
+
   const styles = {
     cartWidget: {
       position: 'relative',
       display: 'inline-block',
+      cursor: 'pointer',
     },
     cartIcon: {
       fontSize: '30px',
@@ -28,7 +35,9 @@ const CartWidget = () => {
   return (
     <div style={styles.cartWidget}>
       <ShoppingCartIcon style={styles.cartIcon} />
-      <span style={styles.cartCount}>0</span>
+      {totalQuantity > 0 && (
+        <span style={styles.cartCount}>{totalQuantity}</span>
+      )}
     </div>
   );
 };
