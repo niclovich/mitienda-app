@@ -18,11 +18,11 @@ const ItemListContainer = ({ greeting }) => {
 
      getProducts()
        .then((response) => {
-          console.log("Productos obtenidos:", response);
+
          if (idCategoria) {
            const filtrados = response.filter(
            (prod) =>
-               prod.category.toLowerCase().replace(/\s+/g, '') ===
+               prod.categoria.toLowerCase().replace(/\s+/g, '') ===
                idCategoria.toLowerCase()
            );
            setProducts(filtrados);

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import { Box, Button, Typography, Card, CardContent, CardMedia, IconButton, Stack, Grid } from "@mui/material";
 import { FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // Icons
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -19,9 +19,17 @@ const CartView = () => {
         <Button variant="contained" size="medium" color="error" startIcon={<DeleteIcon />} sx={{ px: 3, borderRadius: 2, boxShadow: 2, "&:hover": { bgcolor: "error.dark" } }} onClick={() => clearCart()}>
             Vaciar carrito
         </Button>
-        <Button variant="outlined" size="medium" startIcon={<ShoppingCartIcon />} sx={{ px: 3, borderRadius: 2, boxShadow: 1 }} onClick={() => navigate("/")}>
+            <Button 
+            variant="outlined" 
+            size="medium" 
+            startIcon={<ShoppingCartIcon />} 
+            sx={{ px: 3, borderRadius: 2, boxShadow: 1 }} 
+            component={Link} 
+            to="/"
+            >
             Seguir comprando
-        </Button>
+            </Button>
+
         </Box>
 
 
