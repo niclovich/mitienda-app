@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Box, Card, CardContent, CardMedia, Typography, Button, Stack, IconButton, Chip, styled } from "@mui/material";
 import { FaHeart, FaShoppingCart, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ColorSwatch from "./shared/ColorSwatch";
+import { CartContext } from "../context/CartContext";
 
 const StyledCard = styled(Card)({
   maxWidth: 345,
@@ -49,11 +50,16 @@ const OfertaBadge = styled(Box)({
   zIndex: 2
 });
 
+
+
+
+
 const Item = ({ product }) => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
-
+  const { addToCart } = useContext(CartContext);
+  const [varianteSelect, setVarianteSelect] = useState(null);
   const colors = Array.from(new Map(product.variantes.map(v => [v.color.name, v.color])).values());
 
   const availableSizes = product.variantes
@@ -69,18 +75,48 @@ const Item = ({ product }) => {
     if (!varianteSeleccionada || varianteSeleccionada.stock <= 0) {
       alert("Selecciona una variante válida con stock.");
       return;
-    }
 
-    console.log("Producto agregado:", {
+    }
+    onAdd(1); 
+
+
+  };
+
+  //cambio de color y reinicio de talle
+  const onChangeColor = (color) => {
+    setSelectedColor(color.name);
+    setSelectedSize("");
+    setVarianteSelect(null);  // Reseteamos variante al cambiar color
+  };
+
+  //seleccion de talle y variante
+    const selectVariante = (talle) => {
+      setSelectedSize(talle);
+      const varianteEncontrada = product.variantes.find(
+        v => v.color.name === selectedColor && v.talle === talle
+      );
+      setVarianteSelect(varianteEncontrada || null);  // Guardamos variante o null
+    };
+
+  const onAdd = (quantity) => {
+
+
+    const productSelect = {
       id_producto: product.id,
       nombre: product.nombre,
       precio: product.precio,
-      id_variante: varianteSeleccionada.id_variante,
-      talle: varianteSeleccionada.talle,
-      color: varianteSeleccionada.color,
-      cantidad: 1
-    });
+      imagen: product.imagen,
+      id_variante: varianteSelect.id_variante,
+      talle: varianteSelect.talle,
+      color: varianteSelect.color,
+    };
+
+    
+    //handleAddToCart();
+    //showToast('Producto agregado al carrito', 'success');
+    addToCart(productSelect, quantity);
   };
+
 
   return (
     <StyledCard>
@@ -124,8 +160,7 @@ const Item = ({ product }) => {
             <ColorSwatch
               key={color.name}
               onClick={() => {
-                setSelectedColor(color.name);
-                setSelectedSize("");
+                onChangeColor(color);
               }}
               selected={selectedColor === color.name}
               sx={{ backgroundColor: color.value }}
@@ -140,12 +175,13 @@ const Item = ({ product }) => {
           {availableSizes.map(size => (
             <SizeButton
               key={size}
-              onClick={() => setSelectedSize(size)}
+              onClick={() => selectVariante(size)}
               selected={selectedSize === size}
               aria-label={`Seleccionar talle ${size}`}
             >
               {size}
             </SizeButton>
+
           ))}
         </Stack>
 

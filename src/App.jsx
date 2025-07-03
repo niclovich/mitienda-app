@@ -12,6 +12,7 @@ import { CartProvider } from './context/CartContext.jsx';
 import { ToastProvider } from './context/ToastContext.jsx';
 import CartContainer from './components/Cart/CartContainer.jsx';
 import ErrorPage from './components/shared/ErrorPage.jsx';
+import Checkout from './components/Checkout.jsx';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                 <Route path='/categoria/:idCategoria' element={<ItemListContainer />} />
                 <Route path='/item/:id' element={<ItemDetailContainer />} />
                 <Route path='/cart' element={<CartContainer/>} />
+                <Route path='/checkout' element={<Checkout/>} />
                 <Route path='*' element={<ErrorPage/>}/> 
               </Routes>
           </CartProvider>

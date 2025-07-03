@@ -25,17 +25,22 @@ La aplicación está organizada como una SPA con React Router:
 - **📂 Productos por Categoría (`/categoria/:idCategoria`)**: muestra solo los productos de esa categoría. 
 - **🔎 Detalle (`/item/:id`)**: vista detallada del producto, con opciones de color, talle y botón de compra.
 ---
-## ⚙️ Tecnologías Utilizadas|
+## ⚙️ Tecnologías Utilizadas |
 
 - **React** (librería principal para el desarrollo de interfaces)
+- **React DOM** (renderizado de componentes React en el DOM)
 - **Vite** (entorno de desarrollo rápido y moderno)
-- **Material UI** (componentes estilizados listos para producción)
-- **React Router** (navegación SPA)
+- **Material UI (MUI)** (componentes estilizados listos para producción)
+- **MUI Lab** (componentes experimentales de Material UI)
+- **Emotion** (`@emotion/react` y `@emotion/styled`) (estilos CSS-in-JS integrados con MUI)
+- **React Router DOM** (navegación SPA)
 - **React Icons** (íconos vectoriales)
+- **React Slick** y **Slick Carousel** (slider/carrusel responsivo)
+- **Firebase** (autenticación, base de datos y servicios backend)
+- **@fontsource/roboto** (tipografía Roboto optimizada localmente)
 - **JavaScript / JSX**
 - **CSS3**
 
----
 
 ## 🚀 Instalación y Uso
 

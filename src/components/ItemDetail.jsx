@@ -42,7 +42,7 @@ const ItemDetail = ({ product }) => {
   const [varianteSelect, setVarianteSelect] = useState(null);
 
   const { addToCart } = useContext(CartContext);
-  const { showToast } = useToast();
+  //const { showToast } = useToast();
 
   const colors = Array.from(new Map(product.variantes.map(v => [v.color.name, v.color])).values());
 
@@ -68,14 +68,10 @@ const ItemDetail = ({ product }) => {
       setVarianteSelect(varianteEncontrada || null);  // Guardamos variante o null
     };
 
-  const handleAddToCart = () => {
-        // Lógica de agregar al carrito...
-        showToast('Producto agregado al carrito', 'success');
-  };
-  const onAdd = () => {
+
+  const onAdd = (quantity) => {
     setPurchase(true);
 
-    console.log("Cantidad seleccionada:", quantity);
 
     const productSelect = {
       id_producto: product.id,
@@ -87,9 +83,9 @@ const ItemDetail = ({ product }) => {
       color: varianteSelect.color,
     };
 
-    console.log("productSelect", productSelect);
-    handleAddToCart();
-
+    
+    //handleAddToCart();
+    //showToast('Producto agregado al carrito', 'success');
     addToCart(productSelect, quantity);
   };
 

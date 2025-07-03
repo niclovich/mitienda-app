@@ -1,11 +1,12 @@
 import { createContext, useState, useEffect } from "react";
+import { useToast } from '../context/ToastContext';
 
 // Crear nuestro contexto
 export const CartContext = createContext();
 
 // Crear el proveedor
 export const CartProvider = ({ children }) => {
-    
+    const { showToast } = useToast();
     // Inicializar carrito desde localStorage o como array vacío
     const [cart, setCart] = useState(() => {
         const storedCart = localStorage.getItem("cart");
@@ -25,6 +26,7 @@ export const CartProvider = ({ children }) => {
                     ? { ...cartItem, quantity: cartItem.quantity + quantity }
                     : cartItem
             );
+            showToast('Producto agregado al carrito', 'success');
             setCart(updatedCart);
         } else {
             setCart([...cart, { ...item, quantity }]);

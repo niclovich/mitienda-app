@@ -6,6 +6,7 @@ import Toast from './shared/Toast'; // Asegurate de importar correctamente
 const ItemCount = ({ stock, onAdd }) => {
     const [count, setCount] = useState(1);
 
+
     const sumar = () => {
         if (count < stock) setCount(count + 1);
     };
