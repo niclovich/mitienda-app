@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Box,
   Button,
@@ -14,25 +14,70 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useForm } from "react-hook-form";
 import { CartContext } from "../../context/CartContext";
 import OrderSummary from "../OrderSummary/OrderSummary";
+import { useNavigate } from "react-router-dom";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { db } from "../../service/firebase";
 
 const CheckoutEcommerce = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { cart, getTotal,confirmPurchase } = useContext(CartContext);
+  const { cart, getTotal, confirmPurchase } = useContext(CartContext);
   const total = getTotal();
+  const navigate = useNavigate();
 
-  const finalizarCompra = (data) => {
-    confirmPurchase();
+  useEffect(() => {
+    if (cart.length === 0) {
+      navigate("/");
+    }
+  }, [cart, navigate]);
+
+  const finalizarCompra = async (data) => {
+    try {
+      const orden = {
+        cliente: {
+          nombre: data.nombre,
+          apellido: data.apellido,
+          email: data.email,
+          telefono: data.telefono,
+          calle: data.calle,
+          numero: data.numero,
+          departamento: data.departamento,
+          barrio: data.barrio,
+          ciudad: data.ciudad,
+        },
+        productos: cart.map((prod) => ({
+          id_producto: prod.id_producto,
+          id_variante: prod.id_variante,
+          precio: prod.precio,
+          cantidad: prod.quantity,
+          talle: prod.talle,
+          color: prod.color,
+          subtotal: prod.precio * prod.quantity,
+        })),
+        total: getTotal(),
+        envio: 0,
+        estado: "En preparación",
+        fecha: Timestamp.now(),
+      };
+
+      const docRef = await addDoc(collection(db, "orders"), orden);
+      const orderId = docRef.id;
+
+      console.log("Orden registrada con ID:", orderId);
+      confirmPurchase(orderId); // Si esto navega o limpia carrito, perfecto
+
+    } catch (error) {
+      console.error("Error al finalizar la compra:", error);
+    }
   };
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
       <Grid container spacing={4}>
-        
-        {/* Formulario */}
+
         <Grid item xs={12} md={8}>
           <Paper sx={{ p: 4, mb: 3 }} elevation={3}>
             <Typography variant="h6" gutterBottom>DATOS DE CONTACTO</Typography>
-            
+
             <TextField
               label="E-mail"
               fullWidth
@@ -159,7 +204,6 @@ const CheckoutEcommerce = () => {
             />
           </Paper>
 
-
           <Button
             variant="contained"
             fullWidth
@@ -173,7 +217,6 @@ const CheckoutEcommerce = () => {
           </Button>
         </Grid>
 
-        {/* Resumen de compra */}
         <Grid item xs={12} md={4}>
           <OrderSummary
             cart={cart}

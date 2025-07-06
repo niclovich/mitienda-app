@@ -77,13 +77,13 @@ export const CartProvider = ({ children }) => {
     };
 
     //
-    const confirmPurchase = () => {
+    const confirmPurchase = (orderId) => {
         if (cart.length === 0) {
             showError('The cart is empty');
             return;
         }
         // You can add purchase logic here, such as sending the data to a server
-        showPurchase("Purchase completed successfully!");
+        showSuccess("¡Gracias por tu compra! Estamos preparando tu pedido numero "+orderId+".");
         clearCart();
     };
 

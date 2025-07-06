@@ -39,22 +39,10 @@ export const ToastProvider = ({ children }) => {
     });
   };
 
-  // Mensaje de Compra Realizada
-  const showPurchase = (message) => {
-    toast(message, {
-      position: "bottom-right",
-      autoClose: 4000,
-      style: {
-        backgroundColor: '#1565c0', // Azul Compra
-        color: '#fff',
-        borderRadius: 8,
-        fontWeight: 'bold',
-      }
-    });
-  };
+ 
 
   return (
-    <ToastContext.Provider value={{ showError, showSuccess, showPurchase }}>
+    <ToastContext.Provider value={{ showError, showSuccess }}>
       {children}
       <ToastContainer />
     </ToastContext.Provider>
