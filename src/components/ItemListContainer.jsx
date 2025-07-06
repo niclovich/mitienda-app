@@ -66,7 +66,7 @@ const ItemListContainer = ({ greeting }) => {
     console.log("idCategoria:", idCategoria);
 
     const productsCollection = idCategoria
-        ? query(collection(db, "products"), where("category", "==", idCategoria))
+        ? query(collection(db, "products"), where("categoria", "==", idCategoria))
         : collection(db, "products");
 
 

@@ -176,17 +176,7 @@ const ItemDetail = ({ product }) => {
 
           </Box>
 
-{/* 
-          <Box sx={{ mb: 3, display: "flex", alignItems: "center" }}>
-            <Typography variant="subtitle1">Cantidad:</Typography>
-            <IconButton onClick={() => setQuantity(Math.max(1, quantity - 1))} size="small">
-              <FiMinus />
-            </IconButton>
-            <Typography sx={{ mx: 2 }}>{quantity}</Typography>
-            <IconButton onClick={() => setQuantity(quantity + 1)} size="small">
-              <FiPlus />
-            </IconButton>
-          </Box> */}
+
           {purchase ? (
 
             <Button

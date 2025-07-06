@@ -60,9 +60,7 @@ const CheckoutEcommerce = () => {
       };
 
       const docRef = await addDoc(collection(db, "orders"), orden);
-      const orderId = docRef.id;
-
-      console.log("Orden registrada con ID:", orderId);
+      const orderId = docRef.id; 
       confirmPurchase(orderId); // Si esto navega o limpia carrito, perfecto
 
     } catch (error) {
