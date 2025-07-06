@@ -12,7 +12,7 @@ import { CartProvider } from './context/CartContext.jsx';
 import { ToastProvider } from './context/ToastContext.jsx';
 import CartContainer from './components/Cart/CartContainer.jsx';
 import ErrorPage from './components/shared/ErrorPage.jsx';
-import Checkout from './components/Checkout.jsx';
+import Checkout from './components/Checkout/Checkout.jsx';
 
 
 function App() {

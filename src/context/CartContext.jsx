@@ -6,12 +6,13 @@ export const CartContext = createContext();
 
 // Crear el proveedor
 export const CartProvider = ({ children }) => {
-    const { showToast } = useToast();
+    const { showError, showSuccess, showPurchase } = useToast();
     // Inicializar carrito desde localStorage o como array vacío
     const [cart, setCart] = useState(() => {
         const storedCart = localStorage.getItem("cart");
         return storedCart ? JSON.parse(storedCart) : [];
     });
+
 
     // Guardar el carrito en localStorage cada vez que cambie
     useEffect(() => {
@@ -26,7 +27,9 @@ export const CartProvider = ({ children }) => {
                     ? { ...cartItem, quantity: cartItem.quantity + quantity }
                     : cartItem
             );
-            showToast('Producto agregado al carrito', 'success');
+
+            console.log("Producto ya en el carrito, actualizando cantidad");
+            showSuccess('Producto agregado al carrito');
             setCart(updatedCart);
         } else {
             setCart([...cart, { ...item, quantity }]);
@@ -46,13 +49,17 @@ export const CartProvider = ({ children }) => {
 
     // Actualizar cantidad de un producto
     const updateQuantity = (id, quantity) => {
-        const updatedCart = cart.map((item) =>
+        const updatedCart = cart
+            .map((item) =>
             item.id_variante === id
                 ? { ...item, quantity: item.quantity + quantity }
                 : item
-        );
+            )
+            .filter((item) => item.quantity > 0); // elimina los que quedan en 0
+
         setCart(updatedCart);
     };
+
 
     // Verificar si ya está en el carrito
     const isInCart = (id) => {
@@ -69,6 +76,19 @@ export const CartProvider = ({ children }) => {
         return cart.reduce((total, item) => total + item.precio * item.quantity, 0);
     };
 
+    //
+    const confirmPurchase = () => {
+        if (cart.length === 0) {
+            showError('The cart is empty');
+            return;
+        }
+        // You can add purchase logic here, such as sending the data to a server
+        showPurchase("Purchase completed successfully!");
+        clearCart();
+    };
+
+
+
     return (
         <CartContext.Provider
             value={{
@@ -79,8 +99,8 @@ export const CartProvider = ({ children }) => {
                 updateQuantity,
                 getTotalQuantity,
                 getTotal,
-            }}
-        >
+                confirmPurchase,
+            }}>
             {children}
         </CartContext.Provider>
     );

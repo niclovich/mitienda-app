@@ -1,13 +1,14 @@
 import React from "react";
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography, Box, Button } from "@mui/material";
 import Item from "./Item";
+
+
+
 
 const ItemList = ({ products }) => {
   return (
     <>
-      <Typography variant="h4" gutterBottom>
-        Lista de Productos
-      </Typography>
+
 
       <Grid container spacing={3} columns={12}>
         {products.length > 0 ? (

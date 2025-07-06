@@ -1,46 +1,67 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getProducts } from "../mock/AsyncMock";
+import { getProducts,productos } from "../mock/AsyncMock";
 import ItemList from "./ItemList";
-import { Container, Typography, CircularProgress, Box } from "@mui/material";
+import { Container, Typography, CircularProgress, Box ,Button} from "@mui/material";
+import { styled } from "@mui/system";
 import LoaderComponent from "./shared/LoaderComponent";
 
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where ,addDoc} from "firebase/firestore";
 import { db } from "../service/firebase"; // Asegúrate de que la ruta sea correcta
+
 const ItemListContainer = ({ greeting }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const { idCategoria } = useParams();
 
   //PRODUCTOS MOCKEADOS
-   useEffect(() => {
-     setLoading(true);
+  //  useEffect(() => {
+  //    setLoading(true);
 
-     getProducts()
-       .then((response) => {
+  //    getProducts()
+  //      .then((response) => {
 
-         if (idCategoria) {
-           const filtrados = response.filter(
-           (prod) =>
-               prod.categoria.toLowerCase().replace(/\s+/g, '') ===
-               idCategoria.toLowerCase()
-           );
-           setProducts(filtrados);
-         } else {
-           setProducts(response);
-         }
-       })
-       .catch((error) => {
-        console.error("Error fetching products:", error);
-       setProducts([]); // en caso de error, dejar array vacío
-     })
-     .finally(() => {
-        setLoading(false);
-      });
-   }, [idCategoria]);
+  //        if (idCategoria) {
+  //          const filtrados = response.filter(
+  //          (prod) =>
+  //              prod.categoria.toLowerCase().replace(/\s+/g, '') ===
+  //              idCategoria.toLowerCase()
+  //          );
+  //          setProducts(filtrados);
+  //        } else {
+  //          setProducts(response);
+  //        }
+  //      })
+  //      .catch((error) => {
+  //       console.error("Error fetching products:", error);
+  //      setProducts([]); // en caso de error, dejar array vacío
+  //    })
+  //    .finally(() => {
+  //       setLoading(false);
+  //     });
+  //  }, [idCategoria]);
+
+    // const subirData = async () => {
+    //   console.log("click!");
+
+    //   const collectionAgregar = collection(db, "products");
+
+    //   try {
+    //     for (const prod of productos) {
+    //       const docRef = await addDoc(collectionAgregar, prod);
+    //       console.log(`Producto ${prod.nombre} agregado con ID: ${docRef.id}`);
+    //     }
+    //     console.log("Todos los productos fueron cargados correctamente.");
+    //   } catch (error) {
+    //     console.error("Error al cargar productos:", error);
+    //   }
+    // };
+
 
   //PRODUCTOS DESDE FIREBASE
-/*  useEffect(() => {
+
+  
+  useEffect(() => {
     setLoading(true);
     console.log("idCategoria:", idCategoria);
 
@@ -48,7 +69,6 @@ const ItemListContainer = ({ greeting }) => {
         ? query(collection(db, "products"), where("category", "==", idCategoria))
         : collection(db, "products");
 
-    console.log("productsCollection:", productsCollection.docs);
 
     getDocs(productsCollection)
       .then((snapshot) => {
@@ -56,6 +76,7 @@ const ItemListContainer = ({ greeting }) => {
           id: doc.id,
           ...doc.data(),
         }));
+        console.log("Products fetched from Firestore:", productsList);
 
         setProducts(productsList);
       })
@@ -67,12 +88,11 @@ const ItemListContainer = ({ greeting }) => {
         setLoading(false);
       });
   }, [idCategoria]);
-*/
 
   return (
-    <Container maxWidth="xl" style={{ marginTop: "20px" }}>
-      <Typography variant="h4" gutterBottom>{greeting}</Typography>
-
+    <>
+    {/* <Button onClick={subirData}> Subir productos</Button> */}
+        <Container maxWidth="xl" style={{ marginTop: "20px" }}>
       {loading ? (
       <LoaderComponent message="Buscando productos..." />
       ) : products.length === 0 ? (
@@ -85,6 +105,8 @@ const ItemListContainer = ({ greeting }) => {
         </div>
       )}
     </Container>
+    </>
+
   );
 };
 

@@ -1,6 +1,6 @@
-const products = [
+export  const productos = [
   {
-    id: "1",
+ //   id: "1",
     nombre: "Vestido de Verano Floral",
     descripcion: "Vestido largo con estampado floral y escote en V, perfecto para días cálidos.",
     categoria: "Vestidos",
@@ -15,7 +15,7 @@ const products = [
     ]
   },
   {
-    id: "2",
+//    id: "2",
     nombre: "Blusa de Encaje Blanca",
     descripcion: "Blusa elegante con detalles de encaje en las mangas y cuello redondo.",
     categoria: "Blusas",
@@ -31,7 +31,7 @@ const products = [
     ]
   },
   {
-    id: "3",
+//    id: "3",
     nombre: "Jeans Ajustados Azul Oscuro",
     descripcion: "Jeans de tiro alto, cómodos y versátiles.",
     categoria: "Pantalones",
@@ -47,7 +47,7 @@ const products = [
     ]
   },
    {
-    id: "4",
+//    id: "4",
     nombre: "Campera de Cuero Sintético Negra",
     descripcion: "Campera entallada de cuero sintético con cierre frontal y bolsillos laterales.",
     categoria: "Camperas",
@@ -62,7 +62,7 @@ const products = [
     ]
   },
   {
-    id: "5",
+//    id: "5",
     nombre: "Falda Plisada Rosa Suave",
     descripcion: "Falda midi con pliegues y cintura elástica para un look romántico.",
     categoria: "Faldas",
@@ -77,7 +77,7 @@ const products = [
     ]
   },
   {
-    id: "6",
+//    id: "6",
     nombre: "Remera Rayada Casual",
     descripcion: "Remera de algodón de manga corta con diseño de rayas moderno.",
     categoria: "Remeras",

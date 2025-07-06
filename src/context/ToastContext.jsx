@@ -1,33 +1,62 @@
-import { createContext, useContext, useState } from 'react';
-import Toast from '../components/shared/Toast';
+import { createContext, useContext } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+// Crear el Contexto
 const ToastContext = createContext();
 
+// Hook personalizado
 export const useToast = () => useContext(ToastContext);
 
+// Provider Global
 export const ToastProvider = ({ children }) => {
-    const [toast, setToast] = useState({ open: false, message: "", severity: "success" });
 
-    const showToast = (message, severity = "success") => {
-        setToast({ open: false, message: "", severity });
-        setTimeout(() => {
-            setToast({ open: true, message, severity });
-        }, 100);
-    };
+  // Mensaje de Error
+  const showError = (message) => {
+    toast.error(message, {
+      position: "bottom-right",
+      autoClose: 4000,
+      style: {
+        backgroundColor: '#d32f2f', // Rojo Error
+        color: '#fff',
+        borderRadius: 8,
+        fontWeight: 'bold',
+      }
+    });
+  };
 
-    const handleClose = () => {
-        setToast({ ...toast, open: false });
-    };
+  // Mensaje de Éxito
+  const showSuccess = (message) => {
+    toast.success(message, {
+      position: "bottom-right",
+      autoClose: 4000,
+      style: {
+        backgroundColor: '#2e7d32', // Verde Éxito
+        color: '#fff',
+        borderRadius: 8,
+        fontWeight: 'bold',
+      }
+    });
+  };
 
-    return (
-        <ToastContext.Provider value={{ showToast }}>
-            {children}
-            <Toast 
-                open={toast.open} 
-                onClose={handleClose} 
-                message={toast.message} 
-                severity={toast.severity} 
-            />
-        </ToastContext.Provider>
-    );
+  // Mensaje de Compra Realizada
+  const showPurchase = (message) => {
+    toast(message, {
+      position: "bottom-right",
+      autoClose: 4000,
+      style: {
+        backgroundColor: '#1565c0', // Azul Compra
+        color: '#fff',
+        borderRadius: 8,
+        fontWeight: 'bold',
+      }
+    });
+  };
+
+  return (
+    <ToastContext.Provider value={{ showError, showSuccess, showPurchase }}>
+      {children}
+      <ToastContainer />
+    </ToastContext.Provider>
+  );
 };

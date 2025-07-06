@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, Typography, IconButton, Grid } from '@mui/material';
 import { FaShoppingCart } from 'react-icons/fa';
-import Toast from './shared/Toast'; // Asegurate de importar correctamente
 
 const ItemCount = ({ stock, onAdd }) => {
     const [count, setCount] = useState(1);

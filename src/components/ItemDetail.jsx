@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Box, Button, Container, Grid, Typography, Select, MenuItem, IconButton, Collapse, Card, CardContent, styled, ImageList, ImageListItem } from "@mui/material";
+import { Box, Button, Container, Grid, Typography, Select, MenuItem, IconButton, Collapse, Card, CardContent, styled, ImageList, ImageListItem, Paper } from "@mui/material";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import { FaShoppingCart, FaCreditCard } from "react-icons/fa";
@@ -121,6 +121,8 @@ const ItemDetail = ({ product }) => {
         </Grid>
         {/* Datalle */}
         <Grid sx={{ xs: 12, md: 6 }}>
+          <Paper sx={{ p: 4, mb: 3 }} elevation={3}>
+
           <Typography variant="subtitle2" color="text.secondary" gutterBottom>
             {product.marca}
           </Typography>
@@ -218,22 +220,10 @@ const ItemDetail = ({ product }) => {
 
 
 
+          </Paper>
 
 
-          <Card variant="outlined" sx={{ mb: 2 }}>
-            <CardContent sx={{ cursor: "pointer" }} onClick={() => handleSectionToggle("material")}>
-              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Typography variant="subtitle1">Detalles del Material</Typography>
-                {expandedSection === "material" ? <MdExpandLess /> : <MdExpandMore />}
-              </Box>
-              <Collapse in={expandedSection === "material"}>
-                <Typography variant="body2" sx={{ mt: 2 }}>
-                  Confeccionado con mezcla acrílica de alta calidad que garantiza durabilidad y comodidad.
-                  Lavable a máquina. Producto importado.
-                </Typography>
-              </Collapse>
-            </CardContent>
-          </Card>
+      
 
           <Card variant="outlined">
             <CardContent sx={{ cursor: "pointer" }} onClick={() => handleSectionToggle("shipping")}>
