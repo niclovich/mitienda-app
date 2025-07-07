@@ -28,7 +28,6 @@ export const CartProvider = ({ children }) => {
                     : cartItem
             );
 
-            console.log("Producto ya en el carrito, actualizando cantidad");
             showSuccess('Producto agregado al carrito');
             setCart(updatedCart);
         } else {

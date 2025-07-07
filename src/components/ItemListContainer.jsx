@@ -76,12 +76,10 @@ const ItemListContainer = ({ greeting }) => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log("Products fetched from Firestore:", productsList);
 
         setProducts(productsList);
       })
       .catch((error) => {
-        console.error("Error fetching products from Firestore:", error);
         setProducts([]); 
       })
       .finally(() => {
